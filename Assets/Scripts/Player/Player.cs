@@ -8,6 +8,11 @@ public class Player : MonoBehaviour
 
     public event UnityAction Died;
 
+    private void Start()
+    {
+        _respawnPoint = transform.position;
+    }
+
     public void CollectCoin()
     {
         _coinsCount++;
@@ -15,7 +20,6 @@ public class Player : MonoBehaviour
 
     public void Die()
     {
-        Debug.Log("Мы умерли");
         Died?.Invoke();
     }
 
@@ -25,10 +29,5 @@ public class Player : MonoBehaviour
         transform.position = _respawnPoint;
         _coinsCount = 0;
         gameObject.SetActive(true);
-    }
-
-    private void Start()
-    {
-        _respawnPoint = transform.position;
     }
 }

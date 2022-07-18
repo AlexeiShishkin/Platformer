@@ -4,11 +4,6 @@ public class Enemy : MonoBehaviour
 {
     private Vector2 _spawnPoint;
 
-    public void Restart()
-    {
-        transform.position = _spawnPoint;
-    }
-
     private void Start()
     {
         _spawnPoint = transform.position;
@@ -20,5 +15,10 @@ public class Enemy : MonoBehaviour
         {
             player.Die();
         }
+    }
+
+    public void Restart()
+    {
+        transform.position = _spawnPoint;
     }
 }

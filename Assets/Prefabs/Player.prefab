@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7613226231617221640}
   - component: {fileID: 7613226231617221641}
   - component: {fileID: 7613226231617221645}
+  - component: {fileID: 1247545750061902649}
   - component: {fileID: 7613226231617221642}
   - component: {fileID: 7613226231617221646}
   - component: {fileID: 7613226231617221644}
@@ -119,6 +120,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee8f0f8037e1bda41a1827dfeae58ad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1247545750061902649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7613226231617221638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b68bd058f5777b24ca3594aecc1490e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 3
+  _jumpForce: 8
+  _gravityModifier: 2
+  _minGroundNormal: 0.65
 --- !u!114 &7613226231617221642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,10 +148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b02f9a5255371d4491940487c12511c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 3
-  _jumpForce: 8
-  _gravityModifier: 2
-  _minGroundNormal: 0.65
 --- !u!114 &7613226231617221646
 MonoBehaviour:
   m_ObjectHideFlags: 0
