@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PhysicMovement : MonoBehaviour
@@ -13,13 +14,14 @@ public class PhysicMovement : MonoBehaviour
     private Vector2 _targetVelocity;
     private Vector2 _groundNormal;
     private bool _grounded;
+    private bool _oldGrounded;
     private ContactFilter2D _contactFilter;
     private readonly RaycastHit2D[] _hitBuffer = new RaycastHit2D[16];
 
     private const float MinMoveDistance = 0.001f;
     private const float ShellRadius = 0.01f;
 
-    public bool Grounded => _grounded;
+    public event UnityAction Grounded;
 
     private void Start()
     {
@@ -33,6 +35,7 @@ public class PhysicMovement : MonoBehaviour
         _velocity += _gravityModifier * Time.fixedDeltaTime * Physics2D.gravity;
         _velocity.x = _targetVelocity.x * _speed;
 
+        _oldGrounded = _grounded;
         _grounded = false;
 
         Vector2 positionDelta = _velocity * Time.fixedDeltaTime;
@@ -75,6 +78,11 @@ public class PhysicMovement : MonoBehaviour
                         _groundNormal = currentNormal;
                         currentNormal.x = 0;
                     }
+                }
+
+                if (_oldGrounded != true && _grounded)
+                {
+                    Grounded?.Invoke();
                 }
 
                 float projection = Vector2.Dot(_velocity, currentNormal);

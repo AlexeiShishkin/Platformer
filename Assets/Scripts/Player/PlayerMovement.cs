@@ -16,9 +16,19 @@ public class PlayerMovement : MonoBehaviour
     public event UnityAction TurnedLeft;
     public event UnityAction TurnedRight;
 
-    private void Start()
+    private void Awake()
     {
         _physicMovement = GetComponent<PhysicMovement>();
+    }
+
+    private void OnEnable()
+    {
+        _physicMovement.Grounded += OnGrounded;
+    }
+
+    private void OnDisable()
+    {
+        _physicMovement.Grounded -= OnGrounded;
     }
 
     private void Update()
@@ -36,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
             TurnedLeft?.Invoke();
         }
 
-        if (_physicMovement.Grounded)
+        if (_moveState != MoveState.Jump)
         {
             if (Input.GetKey(KeyCode.Space))
             {
@@ -44,16 +54,29 @@ public class PlayerMovement : MonoBehaviour
                 _moveState = MoveState.Jump;
                 Jumped?.Invoke();
             }
-            else if (_moveState != MoveState.Run && _targetVelocityX != 0)
+            else
             {
-                _moveState = MoveState.Run;
-                Ran?.Invoke();
+                ChangeState();
             }
-            else if (_moveState != MoveState.Idle && _targetVelocityX == 0)
-            {
-                _moveState = MoveState.Idle;
-                Idled?.Invoke();
-            }
+        }
+    }
+
+    private void OnGrounded()
+    {
+        ChangeState();
+    }
+
+    private void ChangeState()
+    {
+        if (_moveState != MoveState.Run && _targetVelocityX != 0)
+        {
+            _moveState = MoveState.Run;
+            Ran?.Invoke();
+        }
+        else if (_moveState != MoveState.Idle && _targetVelocityX == 0)
+        {
+            _moveState = MoveState.Idle;
+            Idled?.Invoke();
         }
     }
 
