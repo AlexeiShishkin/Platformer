@@ -9,6 +9,10 @@ public class PlayerAnimation : MonoBehaviour
     private SpriteRenderer _renderer;
     private PlayerMovement _playerMovement;
 
+    private const string Idle = nameof(Idle);
+    private const string Run = nameof(Run);
+    private const string Jump = nameof(Jump);
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -36,17 +40,17 @@ public class PlayerAnimation : MonoBehaviour
 
     private void OnIdle()
     {
-        _animator.Play("Idle");
+        _animator.Play(Idle);
     }
 
     private void OnRun()
     {
-        _animator.Play("Run");
+        _animator.Play(Run);
     }
 
     private void OnJump()
     {
-        _animator.Play("Jump");
+        _animator.Play(Jump);
     }
 
     private void OnTurnLeft()

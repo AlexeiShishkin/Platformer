@@ -19,8 +19,9 @@ public class PlayerMovement : MonoBehaviour
     private ContactFilter2D _contactFilter;
     private readonly RaycastHit2D[] _hitBuffer = new RaycastHit2D[16];
 
-    private const float _minMoveDistance = 0.001f;
-    private const float _shellRadius = 0.01f;
+    private const float MinMoveDistance = 0.001f;
+    private const float ShellRadius = 0.01f;
+    private const string Horizontal = nameof(Horizontal);
 
     public event UnityAction Idled;
     public event UnityAction Ran;
@@ -38,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         float oldVelocityX = _targetVelocity.x;
-        float targetVelosityX = Input.GetAxis("Horizontal");
+        float targetVelosityX = Input.GetAxis(Horizontal);
         _targetVelocity = new Vector2(targetVelosityX, 0);
 
         if (oldVelocityX <= 0 && targetVelosityX > 0)
@@ -91,9 +92,9 @@ public class PlayerMovement : MonoBehaviour
     {
         float distance = move.magnitude;
 
-        if (distance > _minMoveDistance)
+        if (distance > MinMoveDistance)
         {
-            int count = _rigidbody.Cast(move, _contactFilter, _hitBuffer, distance + _shellRadius);
+            int count = _rigidbody.Cast(move, _contactFilter, _hitBuffer, distance + ShellRadius);
 
             for (int i = 0; i < count; i++)
             {
@@ -117,7 +118,7 @@ public class PlayerMovement : MonoBehaviour
                     _velocity -= projection * currentNormal;
                 }
 
-                float modifiedDistance = _hitBuffer[i].distance - _shellRadius;
+                float modifiedDistance = _hitBuffer[i].distance - ShellRadius;
                 distance = modifiedDistance < distance ? modifiedDistance : distance;
             }
         }
